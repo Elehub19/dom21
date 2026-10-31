@@ -1,0 +1,22 @@
+{
+  "product_name": "Простой кредит",
+  "product_id": "ab138afb-f3ba-4a93-b74f-0fcee86d447f",
+  "product_text": "Откройте мир выгодных кредитов с нами!",
+  "rule": [
+    {
+      "query": "USER_OF",
+      "arguments": ["CREDIT"],
+      "negate": true
+    },
+    {
+      "query": "TRANSACTION_SUM_COMPARE_DEPOSIT_WITHDRAW",
+      "arguments": ["DEBIT", ">"],
+      "negate": false
+    },
+    {
+      "query": "TRANSACTION_SUM_COMPARE",
+      "arguments": ["DEBIT", "WITHDRAW", ">", "100000"],
+      "negate": false
+    }
+  ]
+}

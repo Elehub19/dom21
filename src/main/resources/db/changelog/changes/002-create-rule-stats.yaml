@@ -1,0 +1,39 @@
+databaseChangeLog:
+  - changeSet:
+      id: 004-create-rule-stats
+      author: star
+      changes:
+        - createTable:
+            tableName: rule_stats
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: rule_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+                    unique: true
+                    uniqueConstraintName: uq_rule_stats_rule_id
+              - column:
+                  name: hit_count
+                  type: BIGINT
+                  defaultValueNumeric: 0
+                  constraints:
+                    nullable: false
+        # при удалении правила его статистика удаляется автоматически
+        - addForeignKeyConstraint:
+            constraintName: fk_rule_stats_rule
+            baseTableName: rule_stats
+            baseColumnNames: rule_id
+            referencedTableName: rules
+            referencedColumnNames: id
+            onDelete: CASCADE
+        # для уже существующих правил заводим нулевые счётчики
+        - sql:
+            sql: INSERT INTO rule_stats (rule_id, hit_count) SELECT id, 0 FROM rules

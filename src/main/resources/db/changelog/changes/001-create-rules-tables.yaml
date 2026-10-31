@@ -1,0 +1,119 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001-create-rules
+      author: star
+      changes:
+        - createTable:
+            tableName: rules
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: product_name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: product_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+              - column:
+                  name: product_text
+                  type: TEXT
+                  constraints:
+                    nullable: false
+        - createIndex:
+            tableName: rules
+            indexName: idx_rules_product_id
+            columns:
+              - column:
+                  name: product_id
+
+  - changeSet:
+      id: 002-create-rule-queries
+      author: star
+      changes:
+        - createTable:
+            tableName: rule_queries
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: rule_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: query_order
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: query_type
+                  type: VARCHAR(64)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: negate
+                  type: BOOLEAN
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            constraintName: fk_rule_queries_rule
+            baseTableName: rule_queries
+            baseColumnNames: rule_id
+            referencedTableName: rules
+            referencedColumnNames: id
+            onDelete: CASCADE
+        - createIndex:
+            tableName: rule_queries
+            indexName: idx_rule_queries_rule_id
+            columns:
+              - column:
+                  name: rule_id
+
+  - changeSet:
+      id: 003-create-rule-query-arguments
+      author: star
+      changes:
+        - createTable:
+            tableName: rule_query_arguments
+            columns:
+              - column:
+                  name: query_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: arg_order
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: argument
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+        - addPrimaryKey:
+            tableName: rule_query_arguments
+            constraintName: pk_rule_query_arguments
+            columnNames: query_id, arg_order
+        - addForeignKeyConstraint:
+            constraintName: fk_rule_query_arguments_query
+            baseTableName: rule_query_arguments
+            baseColumnNames: query_id
+            referencedTableName: rule_queries
+            referencedColumnNames: id
+            onDelete: CASCADE

@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: star-postgres
+    environment:
+      POSTGRES_DB: star_recommendation
+      POSTGRES_USER: star
+      POSTGRES_PASSWORD: star
+    ports:
+      - "5432:5432"
+    volumes:
+      - star-pgdata:/var/lib/postgresql/data
+
+volumes:
+  star-pgdata:

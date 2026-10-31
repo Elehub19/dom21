@@ -1,0 +1,12 @@
+{
+  "product_name": "Premium-карта",
+  "product_id": "11111111-2222-3333-4444-555555555555",
+  "product_text": "Вы активно пользуетесь дебетовой картой — попробуйте нашу Premium-карту с повышенным кешбэком!",
+  "rule": [
+    {
+      "query": "ACTIVE_USER_OF",
+      "arguments": ["DEBIT"],
+      "negate": false
+    }
+  ]
+}

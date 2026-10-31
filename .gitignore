@@ -1,0 +1,9 @@
+target/
+*.trace.db
+.idea/
+*.iml
+.vscode/
+
+# локальные настройки с секретами (токен бота и т.п.)
+application-local.properties
+.env

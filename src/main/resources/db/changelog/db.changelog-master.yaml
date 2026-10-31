@@ -1,0 +1,5 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/changes/001-create-rules-tables.yaml
+  - include:
+      file: db/changelog/changes/002-create-rule-stats.yaml
